@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\ClientComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ServiceComponent;
 
@@ -30,3 +31,7 @@ Route::middleware([
 });
 
 Route::get('/servicios',ServiceComponent::class);
+
+Route::get('/clientes',ClientComponent::class);
+
+
