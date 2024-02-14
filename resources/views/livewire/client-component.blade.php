@@ -41,7 +41,7 @@
                                             </svg>
                                             Borrar
                                         </button>
-                                                        </td>
+                                    </td>
 
                                 </tr>
                                 @endforeach
