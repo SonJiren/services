@@ -38,7 +38,7 @@ class ClientComponent extends Component
 
     protected $rules = [
         'name' => 'required|max:30',
-        'phone' => 'required|max:10',
+        'phone' => 'required|numeric|digits:10',
         'country' => 'required|max:40',
         'city' => 'required|max:40',
         'home' => 'required|max:50',

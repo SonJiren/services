@@ -63,7 +63,7 @@
                                     </div>
                                     <div>
                                         <x-label>Teléfono</x-label>
-                                        <x-input wire:model="phone" class="w-full" />
+                                        <x-input type="number" wire:model="phone" class="w-full" />
                                         @error('phone')
                                             <span>
                                                 {{ $message }}
