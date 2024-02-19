@@ -30,8 +30,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/servicios',ServiceComponent::class);
+Route::post('/servicios', ServiceComponent::class)->name('servicios');
 
-Route::get('/clientes',ClientComponent::class);
+Route::post('/clientes', ClientComponent::class)->name('clientes');
 
 
