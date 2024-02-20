@@ -16,6 +16,7 @@ class JobComponent extends Component
     public $name;
     public $description;
     public $image;
+    public $cost;
     public $job_id;
     public $confirmJobModal = false;
     public $jobModal = false;
@@ -33,7 +34,7 @@ class JobComponent extends Component
             'name' => 'required|max:30',
             'description' => 'required|max:100',
             'image' => 'required',
-
+            'cost' => 'required',
         ];
     }
 
@@ -44,6 +45,7 @@ class JobComponent extends Component
         $this->name = $job->name;
         $this->description = $job->description;
         $this->image = $job->image;
+        $this->cost = $job->cost;
         $this->jobModal = true;
     }
 
@@ -65,7 +67,7 @@ class JobComponent extends Component
     public function closeModal()
     {
         $this->jobModal = false;
-        $this->reset(['name', 'description', 'image', 'job_id']);
+        $this->reset(['name', 'description', 'image','cost', 'job_id']);
         $this->confirmDeleteJobModal = false;
     }
 
@@ -87,6 +89,7 @@ class JobComponent extends Component
             'name' => 'required|max:30',
             'description' => 'required|max:100',
             'image' => 'required|image|max:1024',
+            'cost' => 'required',
         ]);
 
         $imagePath = $this->image->store('public/images');
@@ -96,9 +99,10 @@ class JobComponent extends Component
             'name' => $this->name,
             'description' => $this->description,
             'image' => $imageName,
+            'cost' => $this->cost,
         ]);
 
-        $this->reset(['name', 'description', 'image']);
+        $this->reset(['name', 'description', 'image','cost']);
         $this->jobs = Job::all();
         $this->jobModal = false;
     }
@@ -110,9 +114,10 @@ class JobComponent extends Component
             'name' => $this->name,
             'description' => $this->description,
             'image' => $this->image,
+            'cost' => $this->cost,
         ]);
 
-        $this->reset(['name', 'description', 'image', 'job_id']);
+        $this->reset(['name', 'description', 'image','cost', 'job_id']);
         $this->jobs = Job::all();
         $this->jobModal = false;
     }

@@ -11,4 +11,5 @@ class Job extends Model
         'name',
         'description',
         'image',
+        'cost',
     ];}

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image')->nullable();
+            $table->decimal('cost', 8, 2)->default(0);
             $table->timestamps();
         });
     }

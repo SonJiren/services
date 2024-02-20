@@ -16,6 +16,7 @@
                 <th scope="col" class="px-6 py-3">Nombre</th>
                 <th scope="col" class="px-6 py-3">Descripción</th>
                 <th scope="col" class="px-6 py-3">Imagen</th>
+                <th scope="col" class="px-6 py-3">Costo</th>
                 <th scope="col" class="px-6 py-3">Action</th>
             </tr>
         </thead>
@@ -33,6 +34,7 @@
                                 class="w-80 h-40 object-cover" />
                         @endif
                     </td>
+                    <td class="px-6 py-4">{{ $job->cost }}</td>
                     <td class="px-6 py-4">
                         <button wire:click="openEditModal({{ $job->id }})"
                             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
@@ -93,6 +95,15 @@
                         <img src="{{ $image->temporaryUrl() }}" alt="Imagen" class="w-full" />
                     </div>
                 @endif
+            </div>
+            <div>
+                <x-label>Costo</x-label>
+                <x-input wire:model="cost" class="w-full" />
+                @error('cost')
+                    <span>
+                        {{ $message }}
+                    </span>
+                @enderror
             </div>
         </x-slot>
         <x-slot name="footer">

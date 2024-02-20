@@ -22,7 +22,7 @@
                         {{ __('Trabajos') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('servicios') }}" :active="request()->routeIs('servicios')">
-                        {{ __('Servicios') }}
+                        {{ __('Pendiente') }}
                     </x-nav-link>
 
                 </div>
