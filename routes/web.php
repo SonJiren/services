@@ -3,6 +3,8 @@
 use App\Http\Livewire\ClientComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ServiceComponent;
+use App\Http\Livewire\JobComponent;
+
 
 
 /*
@@ -30,8 +32,10 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/servicios', ServiceComponent::class)->name('servicios');
+Route::get('/servicios', ServiceComponent::class)->name('servicios');
 
-Route::post('/clientes', ClientComponent::class)->name('clientes');
+Route::get('/clientes', ClientComponent::class)->name('clientes');
+
+Route::get('/jobs', JobComponent::class)->name('jobs');
 
 

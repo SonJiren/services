@@ -15,20 +15,16 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <form method="POST" action="{{ route('clientes') }}">
-                        @csrf
-                        @method('POST')
-                        <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                            {{ __('Clientes') }}
-                        </button>
-                    </form>
-                    <form method="POST" action="{{ route('servicios') }}">
-                        @csrf
-                        @method('POST')
-                        <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                            {{ __('Servicios') }}
-                        </button>
-                    </form>
+                    <x-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
+                        {{ __('Trabajos') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('servicios') }}" :active="request()->routeIs('servicios')">
+                        {{ __('Servicios') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
