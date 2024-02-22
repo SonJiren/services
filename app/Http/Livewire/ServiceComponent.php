@@ -99,7 +99,7 @@ class ServiceComponent extends Component
     {
         $this->services = Service::all();
         return view('livewire.service-component', [
-            'countries' => ['Mexico', 'Canadá', 'Estados Unidos'], // Lista de países
+            'countries' => ['Mexico', 'Canadá', 'Estados Unidos'],
             'cities' => $this->filterCities(),
         ]);
     }

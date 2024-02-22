@@ -71,15 +71,16 @@
                         </span>
                     @enderror
                 </div>
-                <div>
+                <div class="flex flex-col">
                     <x-label>Trabajo</x-label>
-                    <x-input wire:model="trabajo" class="w-full" />
-                    @error('trabajo')
-                        <span>
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <select wire:model="trabajo" class="w-full">
+                        <option value="">Selecciona un trabajo</option>
+                        @foreach ($jobs as $job)
+                            <option value="{{ $job }}">{{ $job }}</option>
+                        @endforeach
+                    </select>
                 </div>
+
                 <div class="flex flex-col">
                     <x-label>País</x-label>
                     <select wire:model="country" class="w-full">
@@ -105,6 +106,15 @@
                         @endforeach
                     </select>
                 </div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div>
                     <x-label>Domicilio</x-label>

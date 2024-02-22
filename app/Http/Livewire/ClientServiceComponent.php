@@ -7,6 +7,7 @@ use App\Models\ClientService;
 use App\Models\Client;
 use App\Models\Job;
 
+
 class ClientServiceComponent extends Component
 {
     public $ClientServiceModal = false;
@@ -14,6 +15,7 @@ class ClientServiceComponent extends Component
     public $searchCity = '';
     public $selectedCountry;
     public $clientservice_id, $name, $trabajo, $country, $city, $address, $date;
+    public $jobs;
 
     protected $rules = [
         'name' => 'required|max:30',
@@ -31,11 +33,11 @@ class ClientServiceComponent extends Component
     public function render()
     {
         $clientservices = ClientService::all();
-        return view('livewire.client-service-component', compact('clientservices'),[
+        $this->jobs = Job::pluck('name');
+        return view('livewire.client-service-component', compact('clientservices'), [
             'countries' => ['Mexico', 'Canadá', 'Estados Unidos'],
-            'cities' => $this->filterCities(),
+            'cities' => $this->getCities(),
         ]);
-
     }
 
     public function filterCities()
