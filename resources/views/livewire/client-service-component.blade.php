@@ -6,7 +6,7 @@
                 stroke="currentColor" class="w-6 h-6 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Agregar Cliente con Servicio
+            Agregar Pendiente
         </button>
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -59,17 +59,17 @@
         </tbody>
     </table>
     <x-dialog-modal wire:model="ClientServiceModal">
-        <x-slot name="title">{{ !$clientservice_id ? 'Nuevo cliente ' : 'Editar cliente' }}</x-slot>
+        <x-slot name="title">{{ !$clientservice_id ? 'Pendiente ' : 'Editar pendiente' }}</x-slot>
         <x-slot name="content">
             <div class="space-y-4">
-                <div>
+                <div class="flex flex-col">
                     <x-label>Cliente</x-label>
-                    <x-input wire:model="name" class="w-full" />
-                    @error('name')
-                        <span>
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <select wire:model="name" class="w-full">
+                        <option value="">Selecciona un cliente</option>
+                        @foreach ($clients as $client)
+                            <option value="{{ $client }}">{{ $client }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="flex flex-col">
                     <x-label>Trabajo</x-label>
@@ -83,7 +83,7 @@
 
                 <div class="flex flex-col">
                     <x-label>País</x-label>
-                    <select wire:model="country" class="w-full">
+                    <select wire:model="selectedCountry" class="w-full">
                         <option value="">Selecciona un país</option>
                         @foreach ($countries as $country)
                             <option value="{{ $country }}">{{ $country }}</option>
@@ -101,7 +101,7 @@
                     <x-label>Ciudad</x-label>
                     <select wire:model="city" class="w-full">
                         <option value="">Selecciona una ciudad</option>
-                        @foreach ($cities as $city)
+                        @foreach ($cities[$selectedCountry] as $city)
                             <option value="{{ $city }}">{{ $city }}</option>
                         @endforeach
                     </select>
@@ -154,7 +154,7 @@
     <x-dialog-modal wire:model="confirmDeleteClientServiceModal">
         <x-slot name="title">Confirmar eliminación</x-slot>
         <x-slot name="content">
-            ¿Estás seguro de que quieres eliminar este cliente?
+            ¿Estás seguro de que quieres eliminar este pendiente?
         </x-slot>
         <x-slot name="footer">
             <button wire:click="deleteClientService({{ $clientservice_id }})"
