@@ -1,42 +1,41 @@
 <div>
     <div class="mb-4">
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
-            wire:click="$toggle('jobModal')">
+            wire:click="openClientServiceModal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Agregar Trabajo
+            Agregar Cliente con Servicio
         </button>
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">Nombre</th>
-                <th scope="col" class="px-6 py-3">Descripción</th>
-                <th scope="col" class="px-6 py-3">Imagen</th>
-                <th scope="col" class="px-6 py-3">Costo</th>
-                <th scope="col" class="px-6 py-3">Action</th>
+                <th scope="col" class="px-6 py-3">Cliente</th>
+                <th scope="col" class="px-6 py-3">Trabajo</th>
+                <th scope="col" class="px-6 py-3">Pais</th>
+                <th scope="col" class="px-6 py-3">Ciudad</th>
+                <th scope="col" class="px-6 py-3">Domicilio</th>
+                <th scope="col" class="px-6 py-3">Fecha</th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach ($jobs as $job)
+            @foreach ($clientservices as $clientservice)
                 <tr
                     class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ $job->name }}</td>
-                    <td class="px-6 py-4">{{ $job->description }}</td>
+                        {{ $clientservice->client->name }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->job->name }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->country }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->city }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->address }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->date }}</td>
+
                     <td class="px-6 py-4">
-                        @if ($job->image)
-                            <img src="{{ Storage::url('images/' . $job->image) }}" alt="Imagen"
-                                class="w-80 h-40 object-cover" />
-                        @endif
-                    </td>
-                    <td class="px-6 py-4">{{ $job->cost }}</td>
-                    <td class="px-6 py-4">
-                        <button wire:click="openEditModal({{ $job->id }})"
+                        <button wire:click="openEditClientServiceModal({{ $clientservice->id }})"
                             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
@@ -45,7 +44,7 @@
                             </svg>
                             Editar
                         </button>
-                        <button wire:click="confirmDeleteJob({{ $job->id }})"
+                        <button wire:click="confirmDeleteClientService({{ $clientservice->id }})"
                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
@@ -59,12 +58,12 @@
             @endforeach
         </tbody>
     </table>
-    <x-dialog-modal wire:model="jobModal">
-        <x-slot name="title">{{ !$job_id ? 'Nuevo trabajo' : 'Editar trabajo' }}</x-slot>
+    <x-dialog-modal wire:model="ClientServiceModal">
+        <x-slot name="title">{{ !$clientservice_id ? 'Nuevo cliente ' : 'Editar cliente' }}</x-slot>
         <x-slot name="content">
             <div class="space-y-4">
                 <div>
-                    <x-label>Nombre</x-label>
+                    <x-label>Cliente</x-label>
                     <x-input wire:model="name" class="w-full" />
                     @error('name')
                         <span>
@@ -73,41 +72,62 @@
                     @enderror
                 </div>
                 <div>
-                    <x-label>Descripción</x-label>
-                    <x-input type="text" wire:model="description" class="w-full" />
-                    @error('description')
+                    <x-label>Trabajo</x-label>
+                    <x-input wire:model="trabajo" class="w-full" />
+                    @error('trabajo')
+                        <span>
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+                <div class="flex flex-col">
+                    <x-label>País</x-label>
+                    <select wire:model="country" class="w-full">
+                        <option value="">Selecciona un país</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country }}">{{ $country }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex flex-col">
+                    <x-label>Buscar ciudad</x-label>
+                    <input type="text" wire:model.debounce.300ms="searchCity" placeholder="Buscar ciudad"
+                        class="w-full">
+                </div>
+
+                <div class="flex flex-col">
+                    <x-label>Ciudad</x-label>
+                    <select wire:model="city" class="w-full">
+                        <option value="">Selecciona una ciudad</option>
+                        @foreach ($cities as $city)
+                            <option value="{{ $city }}">{{ $city }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <x-label>Domicilio</x-label>
+                    <x-input wire:model="address" class="w-full" />
+                    @error('address')
                         <span>
                             {{ $message }}
                         </span>
                     @enderror
                 </div>
                 <div>
-                    <x-label>Imagen</x-label>
-                    <input type="file" wire:model="image" class="w-full" />
-                    @error('image')
+                    <x-label>Fecha</x-label>
+                    <x-input type="date" wire:model="date" class="w-full" />
+                    @error('date')
                         <span>
                             {{ $message }}
                         </span>
                     @enderror
                 </div>
-                @if ($image)
-                    <div>
-                        <img src="{{ $image->temporaryUrl() }}" alt="Imagen" class="w-full" />
-                    </div>
-                @endif
-            </div>
-            <div>
-                <x-label>Costo</x-label>
-                <x-input wire:model="cost" class="w-full" />
-                @error('cost')
-                    <span>
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
+
         </x-slot>
         <x-slot name="footer">
-            <button wire:click="{{ !$job_id ? 'addJob' : 'updateJob' }}"
+            <button wire:click="{{ !$clientservice_id ? 'addClientService' : 'updateClientService' }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
             <button wire:click="closeModal"
                 class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ml-4 flex items-center">
@@ -121,13 +141,13 @@
         </x-slot>
     </x-dialog-modal>
 
-    <x-dialog-modal wire:model="confirmDeleteJobModal">
+    <x-dialog-modal wire:model="confirmDeleteClientServiceModal">
         <x-slot name="title">Confirmar eliminación</x-slot>
         <x-slot name="content">
-            ¿Estás seguro de que quieres eliminar este trabajo?
+            ¿Estás seguro de que quieres eliminar este cliente?
         </x-slot>
         <x-slot name="footer">
-            <button wire:click="deleteJob({{ $job_id }})"
+            <button wire:click="deleteClientService({{ $clientservice_id }})"
                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6 mr-2">

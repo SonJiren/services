@@ -21,7 +21,7 @@
                     <x-nav-link href="{{ route('jobs') }}" :active="request()->routeIs('jobs')">
                         {{ __('Trabajos') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('servicios') }}" :active="request()->routeIs('servicios')">
+                    <x-nav-link href="{{ route('client-service') }}" :active="request()->routeIs('client-service')">
                         {{ __('Pendiente') }}
                     </x-nav-link>
 

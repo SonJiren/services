@@ -4,8 +4,7 @@ use App\Http\Livewire\ClientComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ServiceComponent;
 use App\Http\Livewire\JobComponent;
-
-
+use App\Http\Livewire\ClientServiceComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +37,5 @@ Route::get('/clientes', ClientComponent::class)->name('clientes');
 
 Route::get('/jobs', JobComponent::class)->name('jobs');
 
+Route::get('client-service', ClientServiceComponent::class)->name('client-service');
 
