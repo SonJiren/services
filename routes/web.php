@@ -30,6 +30,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/servicios',ServiceComponent::class);
-
 Route::get('/services', [PaginateController::class, 'index']);
