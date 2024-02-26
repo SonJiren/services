@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ServiceComponent;
+use App\Http\Controllers\PaginateController;
 
 
 /*
@@ -30,3 +31,5 @@ Route::middleware([
 });
 
 Route::get('/servicios',ServiceComponent::class);
+
+Route::get('/services', [PaginateController::class, 'index']);
