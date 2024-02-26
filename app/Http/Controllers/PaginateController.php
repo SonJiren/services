@@ -10,6 +10,6 @@ class PaginateController extends Controller
     public function index()
     {
         $Services = Services::paginate(12);
-        return view('services', compact('Services'));
+        return view('Nombre_De_Vista', compact('Services'));
     }
 }
