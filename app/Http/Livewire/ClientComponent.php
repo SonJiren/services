@@ -22,19 +22,18 @@ class ClientComponent extends Component
     public $client;
 
     public function editClient($clientId)
-{
-    $this->resetValidation();
-    $this->resetFields();
+    {
+        $this->resetValidation();
+        $this->resetFields();
 
-    $client = Client::findOrFail($clientId);
-    $this->client_id = $clientId;
-    $this->name = $client->name;
-    $this->phone = $client->phone;
-    $this->selectedCountry = $client->country;
-    $this->city = $client->city;
-    $this->home = $client->home;
-
-}
+        $client = Client::findOrFail($clientId);
+        $this->client_id = $clientId;
+        $this->name = $client->name;
+        $this->phone = $client->phone;
+        $this->selectedCountry = $client->country;
+        $this->city = $client->city;
+        $this->home = $client->home;
+    }
 
     protected $rules = [
         'name' => 'required|max:30',
@@ -52,7 +51,7 @@ class ClientComponent extends Component
     public function render()
     {
         $this->clients = Client::all();
-        return view('livewire.client-component',[
+        return view('livewire.client-component', [
             'countries' => ['Mexico', 'Canadá', 'Estados Unidos'],
             'cities' => $this->filterCities(),
         ]);
@@ -73,7 +72,7 @@ class ClientComponent extends Component
     }
     public function addClient()
     {
-/*         $this->validate();
+        /*         $this->validate();
  */
         $this->country = $this->selectedCountry;
         $this->city = $this->city;
@@ -81,8 +80,8 @@ class ClientComponent extends Component
         Client::create([
             'name' => $this->name,
             'phone' => $this->phone,
-            'country' =>$this->selectedCountry,
-            'city' =>$this->city,
+            'country' => $this->selectedCountry,
+            'city' => $this->city,
             'home' => $this->home,
         ]);
 
@@ -156,7 +155,7 @@ class ClientComponent extends Component
     public function getCities()
     {
         if ($this->selectedCountry === 'Mexico') {
-            return ['Ciudad de México', 'Guadalajara', 'Monterrey', 'Puebla', 'Tijuana', 'Matamoros','Reynosa','Ciudad Juárez','Tampico','Altamira','Ciudad Victoria', 'León', 'Zapopan', 'Mérida', 'San Luis Potosí', 'Aguascalientes', 'Hermosillo', 'Saltillo', 'Mexicali', 'Culiacán', 'Cancún', 'Chihuahua', 'Durango', 'Toluca', 'Querétaro', 'Morelia', 'Tuxtla Gutiérrez', 'Tlaxcala', 'Zacatecas', 'Victoria', 'Colima', 'La Paz', 'Cuernavaca', 'Campeche', 'Chilpancingo', 'Hidalgo', 'Oaxaca', 'Tabasco', 'Nayarit', 'Sonora', 'Yucatán', 'Chiapas', 'Guanajuato', 'Veracruz', 'Sinaloa', 'Jalisco', 'Nuevo León', 'Coahuila', 'Quintana Roo', 'Tamaulipas', 'San Luis Potosí', 'Aguascalientes', 'Durango', 'Zacatecas', 'Querétaro', 'Hidalgo', 'Tlaxcala', 'Nayarit', 'Colima', 'Quintana Roo', 'Baja California Sur', 'Campeche', 'Sonora', 'Yucatán', 'Chiapas', 'Guanajuato', 'Veracruz', 'Sinaloa', 'Jalisco', 'Nuevo León', 'Coahuila', 'Michoacán'];
+            return ['Ciudad de México', 'Guadalajara', 'Monterrey', 'Puebla', 'Tijuana', 'Matamoros', 'Reynosa', 'Ciudad Juárez', 'Tampico', 'Altamira', 'Ciudad Victoria', 'León', 'Zapopan', 'Mérida', 'San Luis Potosí', 'Aguascalientes', 'Hermosillo', 'Saltillo', 'Mexicali', 'Culiacán', 'Cancún', 'Chihuahua', 'Durango', 'Toluca', 'Querétaro', 'Morelia', 'Tuxtla Gutiérrez', 'Tlaxcala', 'Zacatecas', 'Victoria', 'Colima', 'La Paz', 'Cuernavaca', 'Campeche', 'Chilpancingo', 'Hidalgo', 'Oaxaca', 'Tabasco', 'Nayarit', 'Sonora', 'Yucatán', 'Chiapas', 'Guanajuato', 'Veracruz', 'Sinaloa', 'Jalisco', 'Nuevo León', 'Coahuila', 'Quintana Roo', 'Tamaulipas', 'San Luis Potosí', 'Aguascalientes', 'Durango', 'Zacatecas', 'Querétaro', 'Hidalgo', 'Tlaxcala', 'Nayarit', 'Colima', 'Quintana Roo', 'Baja California Sur', 'Campeche', 'Sonora', 'Yucatán', 'Chiapas', 'Guanajuato', 'Veracruz', 'Sinaloa', 'Jalisco', 'Nuevo León', 'Coahuila', 'Michoacán'];
         } elseif ($this->selectedCountry === 'Canadá') {
             return ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Ottawa', 'Edmonton', 'Winnipeg', 'Québec', 'Hamilton', 'Victoria', 'London', 'Kitchener', 'St. Catharines', 'Halifax', 'Oshawa', 'Windsor', 'Saskatoon', 'Regina', 'Sherbrooke', 'Barrie', 'Saint John', 'Kelowna', 'Abbotsford', 'Sudbury', 'Kingston', 'Trois-Rivières', 'Chicoutimi', 'Thunder Bay', 'Moncton', 'Brantford', 'Nanaimo', 'Fredericton', 'Saint John', 'Drummondville', 'Newmarket', 'Peterborough', 'Chilliwack', 'Red Deer', 'Prince George', 'Sault Ste. Marie', 'North Bay', 'Norfolk', 'Brampton', 'Saint-Jérôme', 'Granby', 'Red Deer', 'Peterborough', 'Belleville', 'Chatham-Kent', 'Saint-Hyacinthe', 'Lethbridge', 'Moose Jaw', 'Medicine Hat', 'Granby', 'Belleville', 'Saint-Hyacinthe', 'North Bay', 'Drummondville', 'Saint-Jérôme', 'Belleville', 'Drummondville', 'North Bay', 'Granby', 'Timmins', 'Rimouski', 'Prince Albert', 'Pembroke', 'Saint-Georges', 'Rouyn-Noranda', 'Owen Sound', 'Woodstock', 'Corner Brook', 'Leamington', 'St. Thomas', 'Courtenay', 'Campbell River', 'Stratford', 'Orillia', 'New Glasgow', 'Bradford West Gwillimbury', 'Grande Prairie', 'Terrace', 'Stratford', 'Orillia', 'Cobourg', 'Amos', 'Val-d\'Or', 'Baie-Comeau', 'Sept-Îles', 'Powell River', 'Sylvan Lake', 'Lloydminster', 'Kenora', 'Swift Current', 'Whitecourt', 'Estevan', 'Williams Lake', 'North Battleford', 'Wasaga Beach', 'Canmore', 'Dryden', 'Cochrane', 'Camrose', 'Innisfail', 'Wetaskiwin', 'Selkirk', 'Steinbach', 'Dauphin', 'The Pas', 'Flin Flon', 'Thompson', 'Norway House', 'Churchill', 'Yorkton', 'Melfort', 'Humboldt', 'La Ronge', 'Meadow Lake', 'Esterhazy', 'Kindersley', 'Nipawin', 'La Loche', 'Assiniboia', 'Carlyle', 'Weyburn', 'Moose Jaw', 'Swift Current', 'Estevan', 'Humboldt', 'Melville', 'Tisdale', 'Rosetown', 'Maple Creek', 'Shaunavon', 'Biggar', 'Watrous', 'Balgonie', 'Caronport', 'Eston', 'Grenfell', 'Indian Head', 'Kerrobert', 'Kipling', 'Langham', 'Lumsden', 'Manor', 'Maple Creek', 'Moosomin', 'Nokomis', 'Pilot Butte', 'Preeceville', 'Regina Beach', 'Rosthern', 'Shaunavon', 'Shellbrook', 'Unity', 'Wilkie', 'Wolseley', 'Wynyard', 'Carnduff', 'Creighton', 'Dalmeny', 'Duck Lake', 'Gull Lake', 'Lashburn', 'Macklin', 'Marsden', 'Porcupine Plain', 'Raymore', 'Redvers', 'Stoughton', 'Wadena', 'Watrous', 'Wolseley', 'Arcola', 'Balgonie', 'Bengough', 'Bredenbury', 'Burstall', 'Canora', 'Carrot River', 'Choiceland', 'Craik', 'Creelman', 'Cupar', 'Davidson', 'Dysart', 'Edenwold', 'Emerald Park', 'Esterhazy', 'Fleming', 'Foam Lake', 'Francis', 'Grenfell', 'Gull Lake', 'Hanley', 'Hepburn', 'Hudson Bay', 'Imperial', 'Indian Head', 'Ituna', 'Kamsack', 'Kelliher', 'Kelvington', 'Kenaston', 'Kerrobert', 'Kinistino', 'Kyle', 'Lampman', 'Lang', 'Lashburn', 'Lemberg', 'Leroy', 'Lumsden', 'Luseland', 'Maidstone', 'Maple Creek', 'Meacham', 'Milestone', 'Montmartre', 'Montrose', 'Mortlach', 'Mossbank', 'Naicam', 'Nipawin', 'Osler', 'Outlook', 'Oxbow', 'Pangman', 'Pense', 'Pierceland', 'Pilot Butte', 'Prince Albert', 'Radisson', 'Regina Beach', 'Rocanville', 'Rose Valley', 'Rosetown', 'Rosthern', 'Saltcoats', 'Saskatoon', 'Shaunavon', 'Shellbrook', 'Spiritwood', 'St. Louis', 'St. Walburg', 'Stewart Valley', 'Stockholm', 'Storthoaks', 'Stoughton', 'Strasbourg', 'Sturgis', 'Swift Current', 'Tisdale', 'Turtleford', 'Unity', 'Vanscoy', 'Vibank', 'Viscount', 'Wadena', 'Wakaw', 'Waldheim', 'Warman', 'Watrous', 'Watson', 'Wawota', 'Weyburn', 'White City', 'Wilkie', 'Willow Bunch', 'Windthorst', 'Wiseton', 'Wolseley', 'Wood Mountain', 'Yorkton', 'Young', 'Humboldt'];
         } elseif ($this->selectedCountry === 'Estados Unidos') {
@@ -164,12 +163,10 @@ class ClientComponent extends Component
         } else {
             return [];
         }
-
     }
 
     public function updatedSelectedCountry()
     {
         $this->reset(['city', 'searchCity']);
     }
-
 }

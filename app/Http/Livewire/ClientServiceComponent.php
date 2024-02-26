@@ -14,7 +14,7 @@ class ClientServiceComponent extends Component
     public $confirmDeleteClientServiceModal = false;
     public $searchCity = '';
     public $selectedCountry = 'Mexico';
-    public $clientservice_id, $name, $trabajo, $country, $city, $address, $date;
+    public $clientservice_id, $client_id, $job_id, $country, $city, $address, $date;
     public $jobs;
     public $clients;
     public $countries = ['Mexico', 'Estados Unidos', 'Canadá'];
@@ -27,8 +27,8 @@ class ClientServiceComponent extends Component
 
 
     protected $rules = [
-        'name' => 'required|max:30',
-        'trabajo' => 'required|max:100',
+        'client_id' => 'required|max:30',
+        'job_id' => 'required|max:100',
         'country' => 'required',
         'city' => 'required',
         'address' => 'required|max:100',
@@ -40,11 +40,12 @@ class ClientServiceComponent extends Component
         $this->validateOnly($propertyName);
     }
 
+
     public function render()
     {
         $clientservices = ClientService::all();
-        $this->jobs = Job::pluck('name');
-        $this->clients = Client::pluck('name');
+        $this->jobs = Job::all();
+        $this->clients = Client::all();
         return view('livewire.client-service-component', compact('clientservices'));
     }
 
@@ -72,13 +73,33 @@ class ClientServiceComponent extends Component
     {
         $clientservice = ClientService::findOrFail($id);
         $this->clientservice_id = $id;
-        $this->name = $clientservice->name;
-        $this->trabajo = $clientservice->trabajo;
+        $this->client_id = $clientservice->client_id;
+        $this->job_id = $clientservice->job_id;
         $this->selectedCountry = $clientservice->country;
         $this->city = $clientservice->city;
         $this->address = $clientservice->address;
         $this->date = $clientservice->date;
+
+        $client = Client::findOrFail($this->client_id);
+        $this->selectedCountry = $client->country;
+        $this->city = $client->city;
+
         $this->ClientServiceModal = true;
+    }
+
+    public function updateCountryAndCity()
+    {
+        // Buscar el cliente
+        $client = Client::findOrFail($this->client_id);
+        // Asignar valores
+        $this->selectedCountry = $client->country;
+        $this->city = $client->city;
+    }
+
+    public function updateCities()
+    {
+        // Actualizar las ciudades
+        $this->cities = $this->getCities();
     }
 
     public function addClientService()
@@ -87,8 +108,8 @@ class ClientServiceComponent extends Component
         $this->city = $this->city;
 
         $this->validate([
-            'name' => 'required',
-            'trabajo' => 'required',
+            'client_id' => 'required',
+            'job_id' => 'required',
             'country' => 'required',
             'city' => 'required',
             'address' => 'required',
@@ -96,8 +117,8 @@ class ClientServiceComponent extends Component
         ]);
 
         ClientService::create([
-            'name' => $this->name,
-            'trabajo' => $this->trabajo,
+            'client_id' => $this->client_id,
+            'job_id' => $this->job_id,
             'country' => $this->country,
             'city' => $this->city,
             'address' => $this->address,
@@ -110,8 +131,8 @@ class ClientServiceComponent extends Component
     public function updateClientService()
     {
         $this->validate([
-            'name' => 'required',
-            'trabajo' => 'required',
+            'client_id' => 'required',
+            'job_id' => 'required',
             'country' => 'required',
             'city' => 'required',
             'address' => 'required',
@@ -120,8 +141,8 @@ class ClientServiceComponent extends Component
 
         $clientservice = ClientService::findOrFail($this->clientservice_id);
         $clientservice->update([
-            'name' => $this->name,
-            'trabajo' => $this->trabajo,
+            'client_id' => $this->client_id,
+            'job_id' => $this->job_id,
             'country' => $this->selectedCountry,
             'city' => $this->city,
             'address' => $this->address,

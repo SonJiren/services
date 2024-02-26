@@ -67,22 +67,9 @@ class JobComponent extends Component
     public function closeModal()
     {
         $this->jobModal = false;
-        $this->reset(['name', 'description', 'image','cost', 'job_id']);
+        $this->reset(['name', 'description', 'image', 'cost', 'job_id']);
         $this->confirmDeleteJobModal = false;
     }
-
-    /*   public function addJob()
-    {
-        Job::create([
-            'name' => $this->name,
-            'description' => $this->description,
-            'image' => $this->image,
-        ]);
-
-        $this->reset(['name', 'description', 'image']);
-        $this->jobs = Job::all();
-        $this->jobModal = false;
-    } */
     public function addJob()
     {
         $validatedData = $this->validate([
@@ -102,7 +89,7 @@ class JobComponent extends Component
             'cost' => $this->cost,
         ]);
 
-        $this->reset(['name', 'description', 'image','cost']);
+        $this->reset(['name', 'description', 'image', 'cost']);
         $this->jobs = Job::all();
         $this->jobModal = false;
     }
@@ -117,7 +104,7 @@ class JobComponent extends Component
             'cost' => $this->cost,
         ]);
 
-        $this->reset(['name', 'description', 'image','cost', 'job_id']);
+        $this->reset(['name', 'description', 'image', 'cost', 'job_id']);
         $this->jobs = Job::all();
         $this->jobModal = false;
     }

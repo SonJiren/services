@@ -6,7 +6,7 @@
                 stroke="currentColor" class="w-6 h-6 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Agregar Pendiente
+            Agregar servicio
         </button>
     </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -19,6 +19,7 @@
                 <th scope="col" class="px-6 py-3">Ciudad</th>
                 <th scope="col" class="px-6 py-3">Domicilio</th>
                 <th scope="col" class="px-6 py-3">Fecha</th>
+                <th scope="col" class="px-6 py-3">Action</th>
             </tr>
         </thead>
 
@@ -28,7 +29,7 @@
                     class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $clientservice->client->name }}</td>
-                    <td class="px-6 py-4">{{ $clientservice->job->name }}</td>
+                    <td class="px-6 py-4">{{ $clientservice->job->name}}</td>
                     <td class="px-6 py-4">{{ $clientservice->country }}</td>
                     <td class="px-6 py-4">{{ $clientservice->city }}</td>
                     <td class="px-6 py-4">{{ $clientservice->address }}</td>
@@ -62,63 +63,42 @@
         <x-slot name="title">{{ !$clientservice_id ? 'Pendiente ' : 'Editar pendiente' }}</x-slot>
         <x-slot name="content">
             <div class="space-y-4">
-                <div class="flex flex-col">
-                    <x-label>Cliente</x-label>
-                    <select wire:model="name" class="w-full">
-                        <option value="">Selecciona un cliente</option>
-                        @foreach ($clients as $client)
-                            <option value="{{ $client }}">{{ $client }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <x-label>Cliente</x-label>
+                <select wire:model="client_id" wire:change="updateCountryAndCity" class="w-full">
+                    <option value="">Selecciona un cliente</option>
+                    @foreach ($clients as $client)
+                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                    @endforeach
+                </select>
+
+                <x-label>Pais</x-label>
+                <select wire:model="selectedCountry" wire:change="updateCities" class="w-full">
+                    <option value="">Selecciona un país</option>
+                    @foreach ($countries as $country)
+                        <option value="{{ $country }}">{{ $country }}</option>
+                    @endforeach
+                </select>
+
+                <x-label>Ciudad</x-label>
+                <select wire:model="city" class="w-full">
+                    <option value="">Selecciona una ciudad</option>
+                    @foreach ($cities[$selectedCountry] as $city)
+                        <option value="{{ $city }}">{{ $city }}</option>
+                    @endforeach
+                </select>
+
                 <div class="flex flex-col">
                     <x-label>Trabajo</x-label>
-                    <select wire:model="trabajo" class="w-full">
+                    <select wire:model="job_id" class="w-full">
                         <option value="">Selecciona un trabajo</option>
                         @foreach ($jobs as $job)
-                            <option value="{{ $job }}">{{ $job }}</option>
+                            <option value="{{ $job->id }}">{{ $job->name }}</option>
                         @endforeach
                     </select>
                 </div>
-
-                <div class="flex flex-col">
-                    <x-label>País</x-label>
-                    <select wire:model="selectedCountry" class="w-full">
-                        <option value="">Selecciona un país</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country }}">{{ $country }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="flex flex-col">
-                    <x-label>Buscar ciudad</x-label>
-                    <input type="text" wire:model.debounce.300ms="searchCity" placeholder="Buscar ciudad"
-                        class="w-full">
-                </div>
-
-                <div class="flex flex-col">
-                    <x-label>Ciudad</x-label>
-                    <select wire:model="city" class="w-full">
-                        <option value="">Selecciona una ciudad</option>
-                        @foreach ($cities[$selectedCountry] as $city)
-                            <option value="{{ $city }}">{{ $city }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <div>
-                    <x-label>Domicilio</x-label>
-                    <x-input wire:model="address" class="w-full" />
+                    <label for="address">Dirección:</label>
+                    <x-input type="text" wire:model="address" class="w-full" />
                     @error('address')
                         <span>
                             {{ $message }}

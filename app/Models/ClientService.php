@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientService extends Model
 {
+
+    protected $fillable = [
+        'client_id', 'job_id', 'country', 'city', 'address', 'date',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class);
