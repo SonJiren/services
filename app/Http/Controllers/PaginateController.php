@@ -9,7 +9,7 @@ class PaginateController extends Controller
 {
     public function index()
     {
-        $services = Services::paginate(15); //Servicios paginados
-        return view('Services', compact('services'));
+        $Services = Services::paginate(12);
+        return view('services', compact('Services'));
     }
 }
