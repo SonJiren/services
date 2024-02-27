@@ -9,7 +9,7 @@ class PaginateController extends Controller
 {
     public function index()
     {
-        $Services = Services::paginate(5);
+        $services = Service::paginate(5); //Paginar hasta un máximo de 5.
         return view('servicios', compact('Services'));
     }
 }
