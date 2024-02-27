@@ -31,3 +31,4 @@ Route::middleware([
 });
 
 Route::get('/services', [PaginateController::class, 'index']);
+//Devolver la vista del paginado, esto quiere decir que el usuario va a ver el paginado en su propia vista.

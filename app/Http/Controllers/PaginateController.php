@@ -13,3 +13,4 @@ class PaginateController extends Controller
         return view('servicios', compact('Services'));
     }
 }
+//Esto es para el paginado de los servicios unicamente.
