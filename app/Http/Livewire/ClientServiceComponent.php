@@ -40,7 +40,6 @@ class ClientServiceComponent extends Component
         $this->validateOnly($propertyName);
     }
 
-
     public function render()
     {
         $clientservices = ClientService::all();
@@ -94,6 +93,10 @@ class ClientServiceComponent extends Component
         // Asignar valores
         $this->selectedCountry = $client->country;
         $this->city = $client->city;
+
+        $clientAddress = $this->getClientAddress($this->client_id);
+        $this->address = $clientAddress;
+
     }
 
     public function updateCities()
@@ -172,6 +175,16 @@ class ClientServiceComponent extends Component
         $this->ClientServiceModal = false;
     }
 
+    public function getClientAddress($clientId)
+    {
+        $client = Client::find($clientId);
+
+        if ($client) {
+            return $client->address;
+        } else {
+            return '';
+        }
+    }
 
     public function updatedSelectedCountry()
     {

@@ -97,9 +97,9 @@
                     </select>
                 </div>
                 <div>
-                    <label for="address">Dirección:</label>
-                    <x-input type="text" wire:model="address" class="w-full" />
-                    @error('address')
+                    <x-label>Dirección:</x-label>
+                    <x-input type="text" wire:model="address" value="{{ $this->getClientAddress($client_id) }}" class="w-full" />
+                        @error('address')
                         <span>
                             {{ $message }}
                         </span>
@@ -118,7 +118,8 @@
         </x-slot>
         <x-slot name="footer">
             <button wire:click="{{ !$clientservice_id ? 'addClientService' : 'updateClientService' }}"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+
             <button wire:click="closeModal"
                 class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ml-4 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

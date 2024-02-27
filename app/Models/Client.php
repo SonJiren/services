@@ -14,6 +14,6 @@ class Client extends Model
         'phone',
         'country',
         'city',
-        'home',
+        'address',
     ];
 }

@@ -90,12 +90,7 @@
                         </span>
                     @enderror
                 </div>
-                @if ($image)
-                    <div>
-                        <img src="{{ $image->temporaryUrl() }}" alt="Imagen" class="w-full" />
-                    </div>
-                @endif
-            </div>
+
             <div>
                 <x-label>Costo</x-label>
                 <x-input wire:model="cost" class="w-full" />

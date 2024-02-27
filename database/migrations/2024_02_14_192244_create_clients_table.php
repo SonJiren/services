@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('country');
             $table->string('city');
-            $table->string('home');
+            $table->string('address');
             $table->timestamps();
         });
     }

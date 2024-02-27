@@ -6,10 +6,8 @@ use Livewire\Component;
 use App\Models\Job;
 use Livewire\WithFileUploads;
 
-
 class JobComponent extends Component
 {
-
     use WithFileUploads;
 
     public $jobs;
@@ -18,10 +16,8 @@ class JobComponent extends Component
     public $image;
     public $cost;
     public $job_id;
-    public $confirmJobModal = false;
     public $jobModal = false;
     public $confirmDeleteJobModal = false;
-
 
     public function mount()
     {
@@ -52,14 +48,12 @@ class JobComponent extends Component
     public function confirmDeleteJob($id)
     {
         $this->job_id = $id;
-        $this->confirmJobModal = true;
         $this->confirmDeleteJobModal = true;
     }
 
     public function deleteJob($id)
     {
         Job::destroy($id);
-        $this->confirmJobModal = false;
         $this->jobs = Job::all();
         $this->confirmDeleteJobModal = false;
     }
@@ -70,6 +64,7 @@ class JobComponent extends Component
         $this->reset(['name', 'description', 'image', 'cost', 'job_id']);
         $this->confirmDeleteJobModal = false;
     }
+
     public function addJob()
     {
         $validatedData = $this->validate([

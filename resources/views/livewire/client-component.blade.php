@@ -31,7 +31,7 @@
                     <td class="px-6 py-4">{{ $client->phone }}</td>
                     <td class="px-6 py-4">{{ $client->country }}</td>
                     <td class="px-6 py-4"> {{ $client->city }}</td>
-                    <td class="px-6 py-4"> {{ $client->home }}</td>
+                    <td class="px-6 py-4"> {{ $client->address }}</td>
                     <td class="px-6 py-4">
                         <button wire:click="openEditModal({{ $client->id }})"
                             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center">
@@ -107,8 +107,8 @@
 
                 <div>
                     <x-label>Domicilio</x-label>
-                    <x-input wire:model="home" class="w-full" />
-                    @error('home')
+                    <x-input wire:model="address" class="w-full" />
+                    @error('address')
                         <span>
                             {{ $message }}
                         </span>

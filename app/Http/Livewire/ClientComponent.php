@@ -15,7 +15,7 @@ class ClientComponent extends Component
     public $phone;
     public $country;
     public $city;
-    public $home;
+    public $address;
     public $client_id;
     public $selectedCountry;
     public $searchCity = '';
@@ -32,7 +32,7 @@ class ClientComponent extends Component
         $this->phone = $client->phone;
         $this->selectedCountry = $client->country;
         $this->city = $client->city;
-        $this->home = $client->home;
+        $this->address = $client->address;
     }
 
     protected $rules = [
@@ -40,7 +40,7 @@ class ClientComponent extends Component
         'phone' => 'required|numeric|digits:10',
         'country' => 'required|max:40',
         'city' => 'required|max:40',
-        'home' => 'required|max:50',
+        'address' => 'required|max:100',
     ];
 
     public function updated($propertyName)
@@ -82,7 +82,7 @@ class ClientComponent extends Component
             'phone' => $this->phone,
             'country' => $this->selectedCountry,
             'city' => $this->city,
-            'home' => $this->home,
+            'address' => $this->address,
         ]);
 
         $this->resetFields();
@@ -96,7 +96,7 @@ class ClientComponent extends Component
         $this->phone = '';
         $this->country = '';
         $this->city = '';
-        $this->home = '';
+        $this->address = '';
     }
 
     public function closeModal()
@@ -114,7 +114,7 @@ class ClientComponent extends Component
         $this->phone = $client->phone;
         $this->country = $client->country;
         $this->city = $client->city;
-        $this->home = $client->home;
+        $this->address = $client->address;
 
         $this->clientModal = true;
     }
@@ -130,7 +130,7 @@ class ClientComponent extends Component
             'country' => $this->selectedCountry,
             'country' => $this->country,
             'city' => $this->city,
-            'home' => $this->home,
+            'address' => $this->address,
         ]);
 
         $this->resetFields();
