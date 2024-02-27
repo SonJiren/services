@@ -16,3 +16,4 @@ public function store(Request $request)
 
     return redirect()->back()->with('success', 'Cliente agregado correctamente');
 }
+//Este controlador va a quedar inutilizable.
