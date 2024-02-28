@@ -20,6 +20,8 @@ class PaginateController extends Controller
     }
 }
 
+//Versiones de public functions antiguas, en dicho caso de que el actual "Try-catch" no funcione. Es una especie de respaldo.
+
 /*
 {
     public function index()
