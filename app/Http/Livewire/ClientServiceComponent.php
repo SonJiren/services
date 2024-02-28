@@ -64,11 +64,11 @@ class ClientServiceComponent extends Component
 
     public function openClientServiceModal()
     {
+
         $this->reset();
         $this->ClientServiceModal = true;
     }
-
-    public function openEditClientServiceModal($id)
+    public function openEditModal($id)
     {
         $clientservice = ClientService::findOrFail($id);
         $this->clientservice_id = $id;
@@ -85,6 +85,7 @@ class ClientServiceComponent extends Component
 
         $this->ClientServiceModal = true;
     }
+
 
     public function updateCountryAndCity()
     {
@@ -169,9 +170,12 @@ class ClientServiceComponent extends Component
         $this->confirmDeleteClientServiceModal = false;
     }
 
+
     public function closeModal()
     {
         $this->reset();
+        $this->confirmDeleteClientServiceModal = false;
+
         $this->ClientServiceModal = false;
     }
 

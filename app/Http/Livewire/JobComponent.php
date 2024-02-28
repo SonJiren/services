@@ -17,7 +17,7 @@ class JobComponent extends Component
     public $cost;
     public $job_id;
     public $jobModal = false;
-    public $confirmDeleteJobModal = false;
+    public $confirmDeleteModal = false;
 
     public function mount()
     {
@@ -48,21 +48,21 @@ class JobComponent extends Component
     public function confirmDeleteJob($id)
     {
         $this->job_id = $id;
-        $this->confirmDeleteJobModal = true;
+        $this->confirmDeleteModal = true;
     }
 
-    public function deleteJob($id)
+    public function delete($id)
     {
         Job::destroy($id);
         $this->jobs = Job::all();
-        $this->confirmDeleteJobModal = false;
+        $this->confirmDeleteModal = false;
     }
 
     public function closeModal()
     {
         $this->jobModal = false;
         $this->reset(['name', 'description', 'image', 'cost', 'job_id']);
-        $this->confirmDeleteJobModal = false;
+        $this->confirmDeleteModal = false;
     }
 
     public function addJob()

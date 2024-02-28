@@ -116,13 +116,13 @@
         </x-slot>
     </x-dialog-modal>
 
-    <x-dialog-modal wire:model="confirmDeleteJobModal">
+    <x-dialog-modal wire:model="confirmDeleteModal">
         <x-slot name="title">Confirmar eliminación</x-slot>
         <x-slot name="content">
             ¿Estás seguro de que quieres eliminar este trabajo?
         </x-slot>
         <x-slot name="footer">
-            <button wire:click="deleteJob({{ $job_id }})"
+            <button wire:click="delete({{ $job_id }})"
                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6 mr-2">
