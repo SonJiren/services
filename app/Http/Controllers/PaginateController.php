@@ -12,13 +12,28 @@ class PaginateController extends Controller
         try {
             $services = Service::paginate(5);
             return view('servicios', compact('services'));
+        } catch(\Illuminate\Database\QueryException $e) {
+            return response()->view('error', ['error' => 'Error de la base de datos:' . $e->getMessage()], 500);
+        }
+    }
+}
+
+
+
+/*
+{
+    public function index()
+    {
+        try {
+            $services = Service::paginate(5);
+            return view('servicios', compact('services'));
         } catch (\Exception $e) {
             return response()->view('error', ['error' => $e->getMessage()], 500);
         }
     }
 }
 
-/*class PaginateController extends Controller
+class PaginateController extends Controller
 {
     public function index()
     {
