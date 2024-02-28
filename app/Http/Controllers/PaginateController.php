@@ -17,3 +17,13 @@ class PaginateController extends Controller
         }
     }
 }
+
+/*class PaginateController extends Controller
+{
+    public function index()
+    {
+        $services = Service::paginate(5);
+        return view('servicios', compact('services'));
+    }
+}
+*/
