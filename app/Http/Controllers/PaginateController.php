@@ -12,12 +12,11 @@ class PaginateController extends Controller
         try {
             $services = Service::paginate(5);
             return view('servicios', compact('services'));
-        } catch(\Illuminate\Database\QueryException $e) {
-            return response()->view('error', ['error' => 'Error de la base de datos:' . $e->getMessage()], 500);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->view('error', ['error' => 'Error de la base de datos: ' . $e->getMessage()], 500);
         }
     }
 }
-
 
 
 /*
