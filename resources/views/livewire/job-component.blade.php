@@ -91,15 +91,16 @@
                     @enderror
                 </div>
 
-            <div>
-                <x-label>Costo</x-label>
-                <x-input wire:model="cost" class="w-full" />
-                @error('cost')
-                    <span>
-                        {{ $message }}
-                    </span>
-                @enderror
-            </div>
+                <div>
+                    <x-label>Costo</x-label>
+                    <x-input wire:model="cost" class="w-full" />
+                    @error('cost')
+                        <span>
+                            {{ $message }}
+                        </span>
+                    @enderror
+                </div>
+             </div>
         </x-slot>
         <x-slot name="footer">
             <button wire:click="{{ !$job_id ? 'addJob' : 'updateJob' }}"

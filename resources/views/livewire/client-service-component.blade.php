@@ -115,7 +115,7 @@
                         </span>
                     @enderror
                 </div>
-
+            </div>
         </x-slot>
         <x-slot name="footer">
             <button wire:click="{{ !$clientservice_id ? 'addClientService' : 'updateClientService' }}"
