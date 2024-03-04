@@ -21,6 +21,7 @@ class ClientComponent extends Component
     public $searchCity = '';
     public $client;
 
+
     public function editClient($clientId)
     {
         $this->resetValidation();
@@ -50,7 +51,7 @@ class ClientComponent extends Component
 
     public function render()
     {
-        $this->clients = Client::all();
+        $this->clients = Client::paginate(5);
         return view('livewire.client-component', [
             'countries' => ['Mexico', 'Canadá', 'Estados Unidos','Rusia'],
             'cities' => $this->filterCities(),
@@ -72,8 +73,7 @@ class ClientComponent extends Component
     }
     public function addClient()
     {
-        /*         $this->validate();
- */
+
         $this->country = $this->selectedCountry;
         $this->city = $this->city;
 

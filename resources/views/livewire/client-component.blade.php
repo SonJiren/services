@@ -156,4 +156,7 @@
             </button>
         </x-slot>
     </x-dialog-modal>
+    <div class="card-body">
+{{$clients->links()}}
+    </div>
 </div>

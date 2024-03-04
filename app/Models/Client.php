@@ -16,4 +16,5 @@ class Client extends Model
         'city',
         'address',
     ];
+
 }
