@@ -22,10 +22,6 @@ class PaginateController extends Controller
 }
 
 
-
-
-
-
 /*public function index()
 {
     try {
