@@ -11,8 +11,8 @@ class PaginateController extends Controller
     {
         try {
             $services = Service::paginate(5);
-            $servicesLinks = $services->links(); //Obtener los enlaces a los servicios.
-            return view('servicios', compact('services', 'servicesLinks')); //Pasar enlaces a la vista web.php
+            $servicesLinks = $services->links();
+            return view('servicios', compact('services', 'servicesLinks'));
         } catch (\Illuminate\Database\QueryException $e) {
             return response()->view('error', ['error' => 'Error de la base de datos: ' . $e->getMessage()], 500);
         } catch (\Exception $e) {
