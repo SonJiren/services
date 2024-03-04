@@ -7,7 +7,7 @@ use App\Models\Client;
 
 class ClientComponent extends Component
 {
-    public $clients;
+
     public $clientModal = false;
     public $confirmDeleteClientModal = false;
 
@@ -51,10 +51,10 @@ class ClientComponent extends Component
 
     public function render()
     {
-        $this->clients = Client::paginate(5);
         return view('livewire.client-component', [
             'countries' => ['Mexico', 'Canadá', 'Estados Unidos','Rusia'],
             'cities' => $this->filterCities(),
+            'clients' => Client::paginate(5),
         ]);
     }
 
