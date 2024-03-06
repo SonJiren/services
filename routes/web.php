@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ServiceComponent;
 use App\Http\Controllers\PaginateController;
+use App\Http\Controllers\PaymentsController;
 
 
 /*
@@ -31,3 +32,5 @@ Route::middleware([
 });
 
 Route::get('/services', [PaginateController::class, 'index']);
+
+Route::post('/payments', [PaymentsController::class, 'store']);
