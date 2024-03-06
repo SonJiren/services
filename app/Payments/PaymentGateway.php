@@ -10,7 +10,7 @@ class PaymentGateway
     public function __construct($amount, $token)
     {
         $this->amount = $amount;
-        $this ->token = $token;
+        $this->token = $token;
     }
 
     public function processPayment()
