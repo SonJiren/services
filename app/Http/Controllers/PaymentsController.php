@@ -47,4 +47,46 @@ class PaymentsController extends Controller
         return redirect()->route('payments.success');
     }
 }
+
+
+
+App/Http/Controllers/PaymentsController.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PaymentTransaction extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'amount', 'status', 'token'];
+
+    //Relacion con el modelo de usuario.
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+
+use App\Models\PaymentTransaction;
+
+class PaymentController extends Controller
+{
+    public function store(Request $request)
+    {
+        $PaymentTransaction = PaymentTransaction::create([
+            'user_id' => auth()->id(),
+            'amount' => $amount,
+            'status' => $paymentSuccessful ? 'success' : 'cancel',
+            'token' => $token,
+        ]);
+
+        if ($paymentSuccessful) {
+            return redirect()->route('payment.success');
+        } else {
+            return redirect()->route('payment.cancel');
+        }
+    }
+}
 */
