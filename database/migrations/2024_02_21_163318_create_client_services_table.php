@@ -17,6 +17,7 @@ class CreateClientServicesTable extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained('clients');
             $table->foreignId('job_id')->constrained('jobs');
+            $table->decimal('cost', 8, 2)->default(0);
             $table->string('country');
             $table->string('city');
             $table->string('address');

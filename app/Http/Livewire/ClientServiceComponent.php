@@ -7,15 +7,15 @@ use App\Models\ClientService;
 use App\Models\Client;
 use App\Models\Job;
 
-
 class ClientServiceComponent extends Component
 {
     public $ClientServiceModal = false;
     public $confirmDeleteClientServiceModal = false;
     public $searchCity = '';
     public $selectedCountry = 'Mexico';
-    public $clientservice_id, $client_id, $job_id, $country, $city, $address, $date;
+    public $clientservice_id, $client_id, $job_id, $country, $city, $address, $date,$cost;
     public $jobs;
+    public $selectedJob;
     public $clients;
     public $countries = ['Mexico', 'Estados Unidos', 'Canadá','Rusia'];
     public $cities = [
@@ -39,6 +39,14 @@ class ClientServiceComponent extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function updatedCost()
+    {
+        if ($this->job_id) {
+            $job_id = Job::findOrFail($this->job_id);
+            $job_id->update(['cost' => $this->cost]);
+        }
     }
 
     public function render()
@@ -75,6 +83,7 @@ class ClientServiceComponent extends Component
         $this->clientservice_id = $id;
         $this->client_id = $clientservice->client_id;
         $this->job_id = $clientservice->job_id;
+        $this->cost = $clientservice->cost;
         $this->selectedCountry = $clientservice->country;
         $this->city = $clientservice->city;
         $this->address = $clientservice->address;
@@ -115,6 +124,7 @@ class ClientServiceComponent extends Component
         $this->validate([
             'client_id' => 'required',
             'job_id' => 'required',
+            'cost' => 'required',
             'country' => 'required',
             'city' => 'required',
             'address' => 'required',
@@ -124,6 +134,7 @@ class ClientServiceComponent extends Component
         ClientService::create([
             'client_id' => $this->client_id,
             'job_id' => $this->job_id,
+            'cost' => $this->cost,
             'country' => $this->country,
             'city' => $this->city,
             'address' => $this->address,
@@ -138,6 +149,7 @@ class ClientServiceComponent extends Component
         $this->validate([
             'client_id' => 'required',
             'job_id' => 'required',
+            'cost' => 'required',
             'country' => 'required',
             'city' => 'required',
             'address' => 'required',
@@ -148,6 +160,7 @@ class ClientServiceComponent extends Component
         $clientservice->update([
             'client_id' => $this->client_id,
             'job_id' => $this->job_id,
+            'cost' => $this->cost,
             'country' => $this->selectedCountry,
             'city' => $this->city,
             'address' => $this->address,
@@ -191,8 +204,21 @@ class ClientServiceComponent extends Component
         }
     }
 
+    public function getJobCost($jobId)
+    {
+
+        $job = Job::find($jobId);
+        if ($job) {
+            $this->cost = $this->cost;
+        } else {
+            $this->cost = null;
+        }
+
+    }
+
     public function updatedSelectedCountry()
     {
         $this->reset(['city', 'searchCity']);
     }
+
 }

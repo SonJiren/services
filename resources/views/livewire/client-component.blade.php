@@ -60,10 +60,12 @@
     <x-dialog-modal wire:model="clientModal">
         <x-slot name="title">{{ !$client_id ? 'Nuevo cliente' : 'Editar cliente' }}</x-slot>
         <x-slot name="content">
-            <div class="space-y-4">
+            <div class="space-y-4"
+                style="background-image: url('{{ asset('storage/images/_edac4cb5-859b-448b-ad57-f1c62fe08dd5.jpg') }}'); background-size: cover;">
                 <div>
                     <x-label>Nombre</x-label>
-                    <x-input wire:model="name" class="w-full" />
+                    <x-input wire:model="name" class="w-full  bg-transparent border border-gray-300 rounded-md"
+                        style="background-color: rgba(0,0,0,0);" />
                     @error('name')
                         <span>
                             {{ $message }}
@@ -72,34 +74,35 @@
                 </div>
                 <div>
                     <x-label>Teléfono</x-label>
-                    <x-input type="number" wire:model="phone" class="w-full" />
+                    <x-input type="number" wire:model="phone"
+                        class="w-full  bg-transparent border border-gray-300 rounded-md"
+                        style="background-color: rgba(0,0,0,0);" />
                     @error('phone')
                         <span>
                             {{ $message }}
                         </span>
                     @enderror
                 </div>
-                <div class="flex flex-col">
-                    <x-label>País</x-label>
-                    <select wire:model="selectedCountry" wire:change="getCities" class="w-full">
-                        <option value="">Selecciona un país</option>
-                        @foreach ($countries as $country)
-                            <option value="{{ $country }}">{{ $country }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <x-label>Pais</x-label>
+                <select wire:model="selectedCountry" wire:change="updateCities"
+                    class="w-full  bg-transparent border border-gray-300 rounded-md">
+                    <option value="">Selecciona un país</option>
+                    @foreach ($countries as $country)
+                        <option value="{{ $country }}">{{ $country }}</option>
+                    @endforeach
+                </select>
 
                 <div class="flex flex-col">
                     <x-label>Buscar ciudad</x-label>
-                    <input type="text" wire:model.debounce.300ms="searchCity" placeholder="Buscar ciudad"
-                        class="w-full">
+                    <input type="text" wire:model.debounce.300ms="searchCity" placeholder="Buscar ciudad "
+                        class="w-full  bg-transparent border border-gray-300 rounded-md">
                 </div>
 
                 <div class="flex flex-col">
                     <x-label>Ciudad</x-label>
-                    <select wire:model="city" class="w-full">
+                    <select wire:model="city" class="w-full  bg-transparent border border-gray-300 rounded-md">
                         <option value="">Selecciona una ciudad</option>
-                        @foreach ($cities as $city)
+                        @foreach ($cities[$selectedCountry] as $city)
                             <option value="{{ $city }}">{{ $city }}</option>
                         @endforeach
                     </select>
@@ -107,7 +110,8 @@
 
                 <div>
                     <x-label>Domicilio</x-label>
-                    <x-input wire:model="address" class="w-full" />
+                    <x-input wire:model="address" class="w-full  bg-transparent border border-gray-300 rounded-md"
+                        style="background-color: rgba(0,0,0,0);" />
                     @error('address')
                         <span>
                             {{ $message }}
@@ -157,6 +161,6 @@
         </x-slot>
     </x-dialog-modal>
     <div class="card-body">
-{{$clients->links()}}
+        {{ $clients->links() }}
     </div>
 </div>

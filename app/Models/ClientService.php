@@ -9,7 +9,8 @@ class ClientService extends Model
 {
 
     protected $fillable = [
-        'client_id', 'job_id', 'country', 'city', 'address', 'date',
+        'client_id', 'job_id', 'country', 'city', 'address', 'date','cost',
+
     ];
 
     public function client()
