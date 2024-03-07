@@ -40,22 +40,8 @@ class PaymentsController extends Controller
 }
 
 
-/*
-{
-    public function store(Request $request)
-    {
-        $paymentGateway = new PaymentGateway();
 
-        $response = $paymentGateway->charge($request->amount, $request->token);
-
-        //Retornar a "pagina de éxito".
-        return redirect()->route('payments.success');
-    }
-}
-
-
-
-App/Http/Controllers/PaymentsController.php
+/* App/Http/Controllers/PaymentsController.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,26 +58,4 @@ class PaymentTransaction extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
-
-use App\Models\PaymentTransaction;
-
-class PaymentController extends Controller
-{
-    public function store(Request $request)
-    {
-        $PaymentTransaction = PaymentTransaction::create([
-            'user_id' => auth()->id(),
-            'amount' => $amount,
-            'status' => $paymentSuccessful ? 'success' : 'cancel',
-            'token' => $token,
-        ]);
-
-        if ($paymentSuccessful) {
-            return redirect()->route('payment.success');
-        } else {
-            return redirect()->route('payment.cancel');
-        }
-    }
-}
-*/
+} */
