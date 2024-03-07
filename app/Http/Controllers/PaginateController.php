@@ -22,7 +22,8 @@ class PaginateController extends Controller
 }
 
 
-/*public function index()
+/*
+public function index()
 {
     try {
         $services = Service::paginate(5);
