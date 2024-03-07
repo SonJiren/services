@@ -36,3 +36,5 @@ Route::get('/services', [PaginateController::class, 'index']);
 Route::post('/payment/store', [PaymentsController::class, 'store'])->name(payment.store);
 Route::view('/payment/success', 'payment.success')->name('payment.success');
 Route::view('/payment/cancel', 'payment.cancel')->name('payment.cancel');
+
+Route::post('/simulate-payment', [PaymentsController::class, 'simulatePayment'])->name('simulate-payment');

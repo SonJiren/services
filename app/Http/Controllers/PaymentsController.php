@@ -32,6 +32,11 @@ class PaymentsController extends Controller
             return redirect()->route('payment.cancel'); //Pago cancelado.
         }
     }
+
+    public function simulatePayment (Request $request)
+    {
+        $amount = $request->input('amount');
+    }
 }
 
 
