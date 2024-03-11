@@ -10,7 +10,7 @@ class PaginateController extends Controller
     public function index(Request $request)
     {
         try {
-            $services = Service::paginate(5);
+            $services = Service::query()->paginate(5);
             $servicesLinks = $services->links();
             return view('servicios', compact('services', 'servicesLinks'));
         } catch (\Illuminate\Database\QueryException $e) {
@@ -22,18 +22,19 @@ class PaginateController extends Controller
 }
 
 
-
-/* {
-    public function index()
+/*
+{
+    public function index(Request $request)
     {
         try {
             $services = Service::paginate(5);
             $servicesLinks = $services->links();
             return view('servicios', compact('services', 'servicesLinks'));
         } catch (\Illuminate\Database\QueryException $e) {
-            return response()->view('error', ['error' => 'Error de la base de datos: ' . $e->getMessage()], 500);
+            return response()->withException($request, $e);
         } catch (\Exception $e) {
-            return response()->view('error', ['error' => $e->getMessage()], 500);
+            return response()->withException($request, $e);
         }
     }
-} */
+}
+*/
