@@ -15,9 +15,6 @@ class PaymentGateway
 
     public function processPayment()
     {
-        //Insertar más cosas si se desea...
         return true; //Pago exitoso
     }
 }
-
-
