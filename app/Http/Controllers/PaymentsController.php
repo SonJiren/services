@@ -11,8 +11,8 @@ class PaymentsController extends Controller
     {
         //Validar la solicitud del pago.
         $request->validate([
-            'amount' => 'required|numeric',
-            'token' => 'required|string',
+            'amount' => 'required|numeric|min:2',
+            'token' => 'required|string|min:16',
         ]);
 
         //Obtener datos de un formulario
