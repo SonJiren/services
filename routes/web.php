@@ -31,7 +31,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/services', [PaginateController::class, 'index']);
+Route::get('/services', [PaginateController::class, 'index'])->name('services.index');
 
 Route::post('/payment/store', [PaymentsController::class, 'store'])->name('payment.store');
 Route::view('/payment/success', 'payment.success')->name('payment.success');
