@@ -33,15 +33,26 @@ class PaymentsController extends Controller
         }
     }
 
-    public function simulatePayment (Request $request)
+    public function simulatePayment(Request $request)
     {
         $amount = $request->input('amount');
+
+        //Encontrar la vista del pago.
+        $payment = Payment::find($request->input('payment_id'));
+
+        $payment->update([
+            'amount' => $amount,
+            'status' => 'simulated',
+        ]);
+
+        return redirect()->route('payments.index')->with('success', 'Pago hecho exitosamente.');
     }
 }
 
 
 
-/* App/Http/Controllers/PaymentsController.php
+/* 
+App/Http/Controllers/PaymentsController.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -59,3 +70,5 @@ class PaymentTransaction extends Model
         return $this->belongsTo(User::class);
     }
 } */
+
+// $amount = $request->input('amount');
