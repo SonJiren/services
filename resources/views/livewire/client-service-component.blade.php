@@ -47,6 +47,7 @@
                             </svg>
                             Editar
                         </button>
+
                         <button wire:click="confirmDeleteClientService({{ $clientservice->id }})"
                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -133,6 +134,16 @@
              <x-slot name="footer">
                 <button wire:click="{{ !$clientservice_id ? 'addClientService' : 'updateClientService' }}"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+
+                <button wire:click="openMercadoPagoModal"
+                class="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+            </svg>
+            Depositar
+        </button>
+
+
                 <button wire:click="closeModal"
                     class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ml-4 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -144,44 +155,47 @@
                 </button>
             </x-slot>
         </x-dialog-modal>
-{{--
+
         <x-dialog-modal wire:model="openMercadoPagoModal" >
             <x-slot name="title">Mercado Pago</x-slot>
             <x-slot name="content">
                 <div class="flex items-center">
-                    <img src="{{ asset('ruta/a/la/imagen.jpg') }}" alt="Imagen de Mercado Pago" class="w-32 h-32 mr-4">
+                    <img src="{{ asset('storage/images/logo-mercadopago.jpg') }}" alt="Imagen de Mercado Pago" class="w-50 h-40 mr-4">
                     <div>
-                        <x-label>Número de Tarjeta</x-label>
-                        <x-input wire:model="numeroTarjeta" class="w-full bg-transparent border border-gray-300 rounded-md" />
-                        <!-- Agregar más estilos según necesidad -->
+                        <x-label for="numeroTarjeta">Número de Tarjeta</x-label>
+                        <x-input id="numeroTarjeta" wire:model="numeroTarjeta" class="w-full bg-transparent border border-gray-300 rounded-md" />
                         @error('numeroTarjeta')
-                            <span class="w--full text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
                 <div class="flex items-center mt-4">
                     <div>
-                        <x-label>Vencimiento</x-label>
-                        <x-input wire:model="vencimiento" class="w-full bg-transparent border border-gray-300 rounded-md" />
-                        <!-- Agregar más estilos según necesidad -->
+                        <x-label for="vencimiento">Vencimiento</x-label>
+                        <x-input id="vencimiento" wire:model="vencimiento" class="w-full bg-transparent border border-gray-300 rounded-md" />
                         @error('vencimiento')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="ml-4">
-                        <x-label>Código CVV</x-label>
-                        <x-input wire:model="cvv" class="w-full bg-transparent border border-gray-300 rounded-md" />
-                        <!-- Agregar más estilos según necesidad -->
+                        <x-label for="cvv">Código CVV</x-label>
+                        <x-input id="cvv" wire:model="cvv" class="w-full bg-transparent border border-gray-300 rounded-md" />
                         @error('cvv')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
                 <div class="mt-4">
-                    <x-label>Fecha de Nacimiento</x-label>
-                    <x-input type="date" wire:model="fechaNacimiento" class="w-full bg-transparent border border-gray-300 rounded-md" />
-                    <!-- Agregar más estilos según necesidad -->
+                    <x-label for="fechaNacimiento">Fecha de Nacimiento</x-label>
+                    <x-input id="fechaNacimiento" type="date" wire:model="fechaNacimiento" class="w-full bg-transparent border border-gray-300 rounded-md" />
                     @error('fechaNacimiento')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="mt-4">
+                    <x-label for="cantidadPagar">Cantidad a Pagar</x-label>
+                    <x-input id="cantidadPagar" wire:model="cantidadPagar" class="w-full bg-transparent border border-gray-300 rounded-md" />
+                    @error('cantidadPagar')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
@@ -203,7 +217,8 @@
                     Cancelar
                 </button>
             </x-slot>
-        </x-dialog-modal> --}}
+        </x-dialog-modal>
+
 
 
 

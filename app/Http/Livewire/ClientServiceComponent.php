@@ -6,15 +6,28 @@ use Livewire\Component;
 use App\Models\ClientService;
 use App\Models\Client;
 use App\Models\Job;
+use App\Notifications\PaymentNotification;
+use Illuminate\Support\Facades\Notification;
+
+
 
 class ClientServiceComponent extends Component
 {
     public $ClientServiceModal = false;
     public $confirmDeleteClientServiceModal = false;
+    public $openMercadoPagoModal= false;
     public $searchCity = '';
     public $selectedCountry = 'Mexico';
     public $clientservice_id, $client_id, $job_id, $country, $city, $address, $date,$cost;
     public $jobs;
+
+    public $edad;
+    public $numeroTarjeta;
+    public $vencimiento;
+    public $cvv;
+    public $cantidadPagar;
+    public $fechaNacimiento;
+
     public $selectedJob;
     public $clients;
     public $countries = ['Mexico', 'Estados Unidos', 'Canadá','Rusia'];
@@ -41,16 +54,10 @@ class ClientServiceComponent extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function updatedCost()
-    {
-        if ($this->job_id) {
-            $job_id = Job::findOrFail($this->job_id);
-            $job_id->update(['cost' => $this->cost]);
-        }
-    }
 
     public function render()
     {
+        $this->edad = 18;
         $clientservices = ClientService::all();
         $this->jobs = Job::all();
         $this->clients = Client::all();
@@ -75,6 +82,8 @@ class ClientServiceComponent extends Component
     {
 
         $this->reset();
+         $this->cantidadPagar = 0;
+         $this->fechaNacimiento = null;
         $this->ClientServiceModal = true;
     }
     public function openEditModal($id)
@@ -118,6 +127,10 @@ class ClientServiceComponent extends Component
 
     public function addClientService()
     {
+       if ($this->edad < 18) {
+            session()->flash('error', 'Debes tener 18 años o más para realizar el pago.');
+            return;
+        }
         $this->country = $this->selectedCountry;
         $this->city = $this->city;
 
@@ -129,9 +142,10 @@ class ClientServiceComponent extends Component
             'city' => 'required',
             'address' => 'required',
             'date' => 'required',
+
         ]);
 
-        ClientService::create([
+        $clientservice = ClientService::create([
             'client_id' => $this->client_id,
             'job_id' => $this->job_id,
             'cost' => $this->cost,
@@ -140,7 +154,10 @@ class ClientServiceComponent extends Component
             'address' => $this->address,
             'date' => $this->date,
         ]);
-
+    
+        Notification::route('mail', 'liderthragg@gmail.com')
+            ->notify(new PaymentNotification($clientservice->job_id, $clientservice->cost));
+    
         $this->closeModal();
     }
 
@@ -166,6 +183,8 @@ class ClientServiceComponent extends Component
             'address' => $this->address,
             'date' => $this->date,
         ]);
+        Notification::route('mail', 'liderthragg@gmail.com')
+        ->notify(new PaymentNotification($clientservice->job_id, $clientservice->cost));
 
         $this->closeModal();
     }
@@ -215,6 +234,53 @@ class ClientServiceComponent extends Component
         }
 
     }
+
+    public function openMercadoPagoModal()
+{
+    $this->openMercadoPagoModal = true;
+}
+public function validarNumeroTarjeta()
+{
+    $numeroTarjeta = str_replace([' ', '-'], '', $this->numeroTarjeta);
+
+    if (!preg_match('/^\d{13,19}$/', $numeroTarjeta) || !$this->luhn($numeroTarjeta)) {
+        $this->addError('numeroTarjeta', 'El número de tarjeta es inválido.');
+    }
+}
+
+public function validarFechaVencimiento()
+{
+    $fechaActual = now();
+    $fechaVencimiento = \Carbon\Carbon::createFromFormat('m/y', $this->vencimiento);
+
+    if (!$fechaVencimiento || $fechaVencimiento->lt($fechaActual)) {
+        $this->addError('vencimiento', 'La fecha de vencimiento es inválida o ha expirado.');
+    }
+}
+
+public function validarCVV()
+{
+    if (!preg_match('/^\d{3,4}$/', $this->cvv)) {
+        $this->addError('cvv', 'El código CVV es inválido.');
+    }
+}
+
+public function luhn($numero)
+{
+    $numero = (string)$numero;
+    $sum = 0;
+    for ($i = strlen($numero) - 1; $i >= 0; $i--) {
+        $digit = (int)$numero[$i];
+        if (($i % 2) == (strlen($numero) % 2)) {
+            $digit *= 2;
+            if ($digit > 9) {
+                $digit -= 9;
+            }
+        }
+        $sum += $digit;
+    }
+    return ($sum % 10 == 0);
+}
 
     public function updatedSelectedCountry()
     {
