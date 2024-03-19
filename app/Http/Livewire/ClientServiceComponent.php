@@ -6,9 +6,8 @@ use Livewire\Component;
 use App\Models\ClientService;
 use App\Models\Client;
 use App\Models\Job;
-use App\Notifications\PaymentNotification;
-use Illuminate\Support\Facades\Notification;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PagoRealizado;
 
 
 class ClientServiceComponent extends Component
@@ -154,10 +153,9 @@ class ClientServiceComponent extends Component
             'address' => $this->address,
             'date' => $this->date,
         ]);
-    
-        Notification::route('mail', 'liderthragg@gmail.com')
-            ->notify(new PaymentNotification($clientservice->job_id, $clientservice->cost));
-    
+
+        Mail::to('liderthragg@gmail.com')->send(new PagoRealizado());
+
         $this->closeModal();
     }
 
@@ -172,7 +170,7 @@ class ClientServiceComponent extends Component
             'address' => 'required',
             'date' => 'required',
         ]);
-
+    
         $clientservice = ClientService::findOrFail($this->clientservice_id);
         $clientservice->update([
             'client_id' => $this->client_id,
@@ -183,11 +181,10 @@ class ClientServiceComponent extends Component
             'address' => $this->address,
             'date' => $this->date,
         ]);
-        Notification::route('mail', 'liderthragg@gmail.com')
-        ->notify(new PaymentNotification($clientservice->job_id, $clientservice->cost));
-
+    
         $this->closeModal();
     }
+    
 
     public function confirmDeleteClientService($id)
     {

@@ -203,7 +203,7 @@
             <x-slot name="footer">
                 @if ($edad >= 18)
                     <button wire:click="{{ !$clientservice_id ? 'addClientService' : 'updateClientService' }}"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pagar</button>
                 @else
                     <span class="text-red-500">Debes tener 18 años o más para realizar el pago.</span>
                 @endif
@@ -218,7 +218,6 @@
                 </button>
             </x-slot>
         </x-dialog-modal>
-
 
 
 
