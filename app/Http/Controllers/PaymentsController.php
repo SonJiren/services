@@ -31,6 +31,10 @@ class PaymentsController extends Controller
         } else {
             return redirect()->route('payment.cancel'); //Pago cancelado.
         }
+
+        PayAmount::create([
+            'amount' => $additionalAmount,
+        ]);
     }
 
     public function simulatePayment(Request $request)
